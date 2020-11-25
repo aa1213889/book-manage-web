@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Button } from '@material-ui/core'
 import '../../assets/css/frame.sass'
 
 class Login extends Component {
@@ -10,7 +9,7 @@ class Login extends Component {
     return (
       <div>
         <h1 className='nav'>我是Login</h1>
-        <Button color="primary" onClick={this.loginHandle}>Hello World</Button>
+        <button color="primary" onClick={this.loginHandle}>Hello World</button>
       </div>
     );
   }

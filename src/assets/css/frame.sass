@@ -1,4 +1,6 @@
 $nav-color: red
+$tree-width: 260px
+$header-height: 2.5rem
 .nav
   $width: 100px
   width: $width
@@ -6,3 +8,25 @@ $nav-color: red
 .frame
   width: 100%
   height: 100%
+  display: flex
+  .frame-left
+    width: $tree-width
+    .tree-list
+      width: 100%
+      height: 100%
+  .frame-right
+    flex: 1
+    background-color: rgb(238,238,238)
+    .frame-header
+      width: calc( 100% - 260px )
+      height: $header-height
+      display: flex
+      justify-content: flex-end
+      border-bottom: 1px solid black
+      position: fixed
+      z-index: 999
+    .frame-views
+      width: 100%
+      height: 2000px
+      margin-top: $header-height
+      z-index: 2
