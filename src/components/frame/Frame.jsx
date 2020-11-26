@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import 'antd/dist/antd.css'
 import Header from './Header'
 import TreeList from './TreeList'
+import Views from './Views'
+
+
 class Frame extends Component {
   render () {
     return (
@@ -11,7 +14,7 @@ class Frame extends Component {
         </div>
         <div className='frame-right'>
           <Header />
-          <div className='frame-views'>333</div>
+          <Views />
         </div>
       </div>
     )
