@@ -13,6 +13,14 @@
   .view-condition
     display: flex
     align-content: center
+    margin-top: 10px
+    span
+      display: flex
+      align-items: center
+    .last
+      margin-left: 15px
+    input
+      width: 15%
   .view-table
     flex: 1
     display: flex
@@ -24,6 +32,13 @@
       display: flex
       width: 100%
       height: 50px
+      align-items: center
+      span
+        padding-left: 15px
+      span:hover
+        cursor: pointer
+        color: rgb(24,144,255)
+        transition: color .5s
     .ant-table-wrapper
       width: 100%
       .interval-line
@@ -36,3 +51,16 @@
   color: rgb(82,196,28)
 .red
   color: rgb(245,33,45)
+
+#loading
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background: rgba(0, 0, 0, 0.75)
+  display: flex
+  align-items: center
+  justify-content: center
+  z-index: 9999
+  font-size: 20px

@@ -1,39 +1,40 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react'
+import { Modal, Button } from 'antd'
 import ViewTitle from '../common/ViewTitle'
 import { Table } from 'antd'
-
-const columns = [
+import Common from '../../common'
+const UserColumns = [
   {
-    title: 'Name',
+    title: '姓名',
     dataIndex: 'name',
   },
   {
-    title: 'Chinese Score',
-    dataIndex: 'chinese',
-    sorter: {
-      compare: (a, b) => a.chinese - b.chinese,
-      multiple: 3,
-    },
+    title: '用户编号',
+    dataIndex: 'id',
   },
   {
-    title: 'Math Score',
-    dataIndex: 'math',
-    sorter: {
-      compare: (a, b) => a.math - b.math,
-      multiple: 2,
-    },
+    title: '性别',
+    dataIndex: 'gender',
   },
   {
-    title: 'English Score',
-    dataIndex: 'english',
+    title: '年龄',
+    dataIndex: 'age',
+  },
+  {
+    title: '邮箱',
+    dataIndex: 'email',
+  },
+  {
+    title: '手机号',
+    dataIndex: 'phoneNum',
     sorter: {
       compare: (a, b) => a.english - b.english,
       multiple: 1,
     },
   },
   {
-    title: 'Action',
+    title: '操作',
     key: 'action',
     render: () => (
       <div>
@@ -45,59 +46,75 @@ const columns = [
   }
 ];
 
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    chinese: 98,
-    math: 60,
-    english: 70,
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    chinese: 98,
-    math: 66,
-    english: 89,
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    chinese: 98,
-    math: 90,
-    english: 70,
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    chinese: 88,
-    math: 99,
-    english: 89,
-  }
-]
-
 function onChange (pagination, filters, sorter, extra) {
-  console.log('params', pagination, filters, sorter, extra);
+  // console.log('params', pagination, filters, sorter, extra);
 }
 
 export default class UserManage extends Component {
+
+  state = {
+    usersData: [],
+    userModalVisible: false
+  }
+
+  componentDidMount () {
+    this.getUsers({})
+  }
+
+  getUsers = (queryData) => {
+    this.$axios.post('/user/usersInfo', queryData).then(res => {
+      let usersData = this.dataInit(Common.setTableKey(res.data.playload, '_id'))
+      this.setState({ usersData })
+    }).catch(err => {
+    })
+  }
+
+  showModal = () => {
+    this.setState({ userModalVisible: true })
+  }
+
+  handleOk = () => {
+    this.setState({ userModalVisible: false })
+  }
+
+  handleCancel = () => {
+    this.setState({ userModalVisible: false })
+  }
+
+  dataInit = (data) => {
+    for (let i in data) {
+      if (data[i].gender === 0) {
+        data[i].gender = '男'
+      } else if (data[i].gender === 1) {
+        data[i].gender = '女'
+      } else {
+        data[i].gender = '---'
+      }
+    }
+    return data
+  }
+
   render () {
     return (
       <div className='view-page'>
+        <Modal title="Basic Modal"
+          visible={this.state.userModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
+        </Modal>
         <ViewTitle mainTitle='用户信息' subTitle='用户设置' />
         <div className='view-condition'>
           2333:<input />
         </div>
         <div className='view-table'>
           <div className='view-handle'>
-            <button>添加用户</button>
+            <Button>添加用户</Button>
           </div>
-          <Table columns={columns} dataSource={data} onChange={onChange}
+          <Table columns={UserColumns} dataSource={this.state.usersData} onChange={onChange}
             onRow={record => {
               return {
                 onClick: event => {
-                  console.log(event.target.name)
-                  console.log(record)
+                  this.showModal()
+                  // console.log(event.target.name)
+                  // console.log(record)
                 }, // 点击行
                 onDoubleClick: event => { },
                 onContextMenu: event => { },
